@@ -4,6 +4,8 @@
 //Changes the color and the hovering properties of the navbar
 @mixin navbar-variant($color, $font-color: rgba(255, 255, 255, 0.8), $hover-color: #f6f6f6, $hover-bg: rgba(0, 0, 0, 0.1)) {
   background-color: $color;
+  border: none;
+  margin-bottom: 0;
   //Navbar links
   .nav > li > a {
     color: $font-color;
@@ -22,6 +24,7 @@
 
   //Add color to the sidebar toggle button
   .sidebar-toggle {
+    background: darken($color, 2);
     color: $font-color;
     &:hover {
       color: $hover-color;
@@ -70,6 +73,15 @@
 
 //Different radius each side
 @mixin border-radius($top-left, $top-right: $top-left, $bottom-left: $top-left,$bottom-right: $top-right) {
+  border-top-left-radius: $top-left;
+  border-top-right-radius: $top-right;
+  border-bottom-right-radius: $bottom-right;
+  border-bottom-left-radius: $bottom-left;
+}
+
+//Different radius each side
+@mixin border-radius-explicit($top-left, $top-right, $bottom-left, $bottom-right)
+{
   border-top-left-radius: $top-left;
   border-top-right-radius: $top-right;
   border-bottom-right-radius: $bottom-right;
@@ -155,24 +167,22 @@
       background-color: lighten($sidebar-dark-bg, 10%);
       border: 1px solid transparent;
       height: 35px;
-      //.transition(all $transition-speed $transition-fn);
+      @include transition(all $transition-speed $transition-fn);
     }
     input[type="text"] {
       color: #666;
-      @include border-radius(2px, 0, 2px, 0);
-      &:focus,
-      &:focus + .input-group-btn .btn {
+      @include border-radius-explicit(2px, 0, 2px, 0);
+      &:focus, &:focus + .input-group-btn .btn {
         background-color: #fff;
         color: #666;
       }
       &:focus + .input-group-btn .btn {
         border-left-color: #fff;
-
       }
     }
     .btn {
       color: #999;
-      @include border-radius(0, 2px, 0, 2px);
+      @include border-radius-explicit(0, 2px, 0, 2px);
     }
   }
 }
@@ -187,7 +197,7 @@
   }
   .content-wrapper,
   .main-footer {
-    border-left: 1px solid $gray;
+    border-left: 1px solid $gray-lighter;
   }
   //User Panel (resides in the sidebar)
   .user-panel {
@@ -202,11 +212,11 @@
     //Section Headning
     &.header {
       color: lighten($sidebar-light-color, 25%);
-      background: $sidebar-light-bg;
+      background: darken($sidebar-light-bg, 2%);
     }
     //links
     > a {
-      border-left: 3px solid transparent;
+      //border-left: 3px solid transparent;
       font-weight: 600;
     }
     //Hover and active states
@@ -219,7 +229,7 @@
 
     }
     &.active {
-      border-left-color: $icon-active-color;
+      border-left: 3px solid $icon-active-color;
       > a {
         font-weight: 600;
       }
@@ -238,6 +248,8 @@
   }
   //All submenus
   .treeview-menu {
+    padding-left: 10px;
+
     > li {
       > a {
         color: $sidebar-light-submenu-color;
@@ -262,11 +274,11 @@
       background-color: #fff; //darken($sidebar-light-bg, 3%);
       border: 1px solid transparent;
       height: 35px;
-      //.transition(all $transition-speed $transition-fn);
+      @include transition(all $transition-speed $transition-fn);
     }
     input[type="text"] {
       color: #666;
-      @include border-radius(2px, 0, 2px, 0);
+      @include border-radius-explicit(2px, 0, 2px, 0);
       &:focus,
       &:focus + .input-group-btn .btn {
         background-color: #fff;
@@ -278,7 +290,7 @@
     }
     .btn {
       color: #999;
-      @include border-radius(0, 2px, 0, 2px);
+      @include border-radius-explicit(0, 2px, 0, 2px);
     }
   }
   @media (min-width: $screen-sm-min) {
